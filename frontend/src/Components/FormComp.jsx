@@ -1,13 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './FormComp.css';
 import { FcGoogle } from "react-icons/fc";
-import backImage from '../assets/back.jpg';
-import Fade from 'react-bootstrap/Fade';
 import axios from "axios";
 
 function FormComp(props) {
-  const [fadeIn, setFadeIn] = useState(false);
+  
 
 const [formData, setFormData] = useState(
     props.dataInput.reduce((acc, field) => ({ ...acc, [field]: "" }), {})
@@ -39,13 +37,9 @@ const [formData, setFormData] = useState(
     }
   };
 
-  
-  useEffect(() => {
-    setFadeIn(true);
-  }, []);
 
   return (
-    <Fade in={fadeIn}>
+
       <div className="container-fluid vh-100 d-flex align-items-center justify-content-center">
         <div className="row w-100">
           
@@ -102,7 +96,7 @@ const [formData, setFormData] = useState(
           </div>
         </div>
       </div>
-    </Fade>
+
   );
 }
 
