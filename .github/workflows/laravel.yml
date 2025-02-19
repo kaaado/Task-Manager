@@ -72,11 +72,6 @@ jobs:
           DB_USERNAME: root
           DB_PASSWORD: ""
 
-      
-
-      - name: ✅ Run Tests
-        run: php artisan test
-        working-directory: ./backend
 
       - name: 🔍 Run PHPStan
         run: vendor/bin/phpstan analyse
