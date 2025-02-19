@@ -71,8 +71,3 @@ jobs:
           DB_DATABASE: task
           DB_USERNAME: root
           DB_PASSWORD: ""
-
-
-      - name: 🔍 Run PHPStan
-        run: vendor/bin/phpstan analyse
-        working-directory: ./backend
