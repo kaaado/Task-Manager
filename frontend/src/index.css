@@ -9,3 +9,49 @@ body {
 }
 
 
+.fade-in {
+  opacity: 0; 
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.toast {
+
+  background-color: #333; 
+  color: white;           
+  border-radius: 8px;  
+  padding: 16px;        
+  margin: 8px 0;         
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes custom-enter {
+  from {
+    transform: translateY(20px); 
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes custom-exit {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(20px); 
+    opacity: 0;
+  }
+}
