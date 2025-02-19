@@ -50,14 +50,7 @@ jobs:
           echo "DB_PASSWORD=" >> .env
         working-directory: ./backend
 
-      - name: 🔑 Install Passport and Set Environment Variables
-        run: |
-          php artisan passport:install  --no-interaction
-          CLIENT_ID=$(php artisan passport:client --personal --no-interaction --quiet | head -n 1)
-          CLIENT_SECRET=$(php artisan passport:client --personal --no-interaction --quiet --secret)
-          echo "PASSPORT_PERSONAL_ACCESS_CLIENT_ID=$CLIENT_ID" >> .env
-          echo "PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=$CLIENT_SECRET" >> .env
-        working-directory: ./backend
+     
 
       - name: 🏁 Ensure MySQL is Ready
         run: |
