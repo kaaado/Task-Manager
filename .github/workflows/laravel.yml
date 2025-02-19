@@ -15,7 +15,7 @@ jobs:
       mysql:
         image: mysql:8
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'   
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
           MYSQL_DATABASE: task
           MYSQL_ROOT_PASSWORD: ''
           MYSQL_PASSWORD: ''
@@ -47,7 +47,7 @@ jobs:
           echo "DB_PORT=3306" >> .env
           echo "DB_DATABASE=task" >> .env
           echo "DB_USERNAME=root" >> .env
-          echo "DB_PASSWORD=" >> .env  
+          echo "DB_PASSWORD=" >> .env
         working-directory: ./backend
 
       - name: 🏁 Ensure MySQL is Ready
@@ -58,9 +58,9 @@ jobs:
             sleep 2
           done
           echo "MySQL did not start in time!" && exit 1
-          
+
       - name: 🛠️ Run Migrations with MySQL
-        run: php artisan migrate --force
+        run: php artisan migrate --force --no-interaction
         working-directory: ./backend
         env:
           DB_CONNECTION: mysql
@@ -72,14 +72,12 @@ jobs:
 
       - name: 🔑 Install Passport and Set Environment Variables
         run: |
-          php artisan passport:install 
-          CLIENT_ID=$(php artisan passport:client --personal --quiet | head -n 1)
-          CLIENT_SECRET=$(php artisan passport:client --personal  --quiet --secret)
+          php artisan passport:install  --no-interaction
+          CLIENT_ID=$(php artisan passport:client --personal --no-interaction --quiet | head -n 1)
+          CLIENT_SECRET=$(php artisan passport:client --personal --no-interaction --quiet --secret)
           echo "PASSPORT_PERSONAL_ACCESS_CLIENT_ID=$CLIENT_ID" >> .env
           echo "PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=$CLIENT_SECRET" >> .env
         working-directory: ./backend
-
-      
 
       - name: ✅ Run Tests
         run: php artisan test
