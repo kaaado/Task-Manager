@@ -59,16 +59,16 @@ jobs:
           done
           echo "MySQL did not start in time!" && exit 1
           
-       - name: 🛠️ Run Migrations with MySQL
-         run: php artisan migrate --force
-         working-directory: ./backend
-         env:
-          	DB_CONNECTION: mysql
-          	DB_HOST: 127.0.0.1
-          	DB_PORT: 3306
-          	DB_DATABASE: task
-          	DB_USERNAME: root
-          	DB_PASSWORD: ""
+      - name: 🛠️ Run Migrations with MySQL
+        run: php artisan migrate --force
+        working-directory: ./backend
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: task
+          DB_USERNAME: root
+          DB_PASSWORD: ""
 
       - name: 🔑 Install Passport and Set Environment Variables
         run: |
