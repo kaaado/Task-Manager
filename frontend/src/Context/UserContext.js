@@ -20,14 +20,18 @@ export const UserProvider = ({ children }) => {
       onSuccess: (data) => {
         setUser(data);
       },
+      onError: (error) => {
+        console.log('Error fetching user data')
+      },
+    
     }
   );
 
-  // Fetch user on first render (only once)
+  // Fetch user 
   useEffect(() => {
-    if (!user) {
+
       mutation.mutate();
-    }
+    
   }, []);
 
   return (
