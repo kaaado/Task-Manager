@@ -1,3 +1,11 @@
+.left-side{
+background-color:#f6f5fa;
+}
+
+.right-side input{
+	outline:none;
+}
+
 .or-divider {
   display: flex;
   align-items: center;
