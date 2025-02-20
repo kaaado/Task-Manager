@@ -1,5 +1,5 @@
-import FormComp from "../Components/Form/FormComp"
-import { LOGIN } from "../Api/Api";
+import FormComp from "../../../Components/Form/FormComp"
+import { LOGIN } from "../../../Api/Api";
 
 export default function Login() {
   const loginData=['email','password']

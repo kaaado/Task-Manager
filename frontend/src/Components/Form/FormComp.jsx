@@ -1,4 +1,4 @@
-import { Link,useNavigate } from "react-router-dom";
+import { Link,useNavigate, useLocation } from "react-router-dom";
 import "./FormComp.css";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
@@ -12,8 +12,9 @@ import useForm from "../../Hooks/useForm";
 function FormComp(props) {
   // Set up Coockie for storing the token 
   const cookie = Cookie();
-  // Set up navigation
+  // Set up navigation & location
   const nav = useNavigate();
+  const location = useLocation();
 
   // Using useForm Hook
   const { values: formData, handleChange, resetForm } = useForm(
@@ -37,8 +38,7 @@ function FormComp(props) {
         resetForm();
       },
       onError: (error) => {
-             const errorMessage = error.response?.data?.message || "Something went wrong. Please try again.";
-
+             console.log(error)
       },
     }
   );
@@ -96,7 +96,7 @@ function FormComp(props) {
             <p className="my-2">
               {props.type === "register" ? "Already have an account?" : "Don't have an account?"}
               <Link
-                to={props.type === "register" ? "/login" : "/register"}
+                to={props.type === "register" ? "/login" : "/register"} state={{from:location.pathname}}
                 className="text-decoration-none text-primary text-capitalize ms-1"
               >
                 {props.type === "register" ? "login" : "register"}
@@ -104,7 +104,7 @@ function FormComp(props) {
             </p>
 
            {mutation.isError && (
-              <p className="error">{mutation.error?.response?.data?.message || "Something went wrong!"}</p>
+              <p className="error">{mutation.error?.response?.status === 422 ? mutation.error?.response?.data?.message :mutation.error?.response?.status === 401 ? mutation.error?.response?.data?.error : "Something went wrong!"}</p>
             )}
           </form>
 
