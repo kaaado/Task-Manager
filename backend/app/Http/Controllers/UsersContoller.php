@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersContoller extends Controller
 {
+
     // Get Auth User
     public function authUser()
     {
