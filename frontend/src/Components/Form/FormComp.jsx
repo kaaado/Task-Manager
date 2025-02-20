@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import "./FormComp.css";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
@@ -10,14 +10,19 @@ import { useMutation } from "react-query";
 import useForm from "../../Hooks/useForm"; 
 
 function FormComp(props) {
+  // Set up Coockie for storing the token 
   const cookie = Cookie();
+  // Set up navigation
+  const nav = useNavigate();
 
   // Using useForm Hook
   const { values: formData, handleChange, resetForm } = useForm(
     props.dataInput.reduce((acc, field) => ({ ...acc, [field]: "" }), {})
   );
 
-  // React Query Mutation for form submission
+  // React Query Mutation for form submission 
+  // Success : Store token in Coockie and navigate Task page
+  // Error : show the error
   const mutation = useMutation(
     async () => {
       const response = await axios.post(`${BASEURL}/${props.endApi}`, formData);
@@ -28,17 +33,16 @@ function FormComp(props) {
         const token = data.token;
         cookie.set("task", token);
         toast.success(`Welcome ${data.user.name.slice(0, 15)}`);
-        window.location.pathname = "/";
+        nav('/tasks')
         resetForm();
       },
       onError: (error) => {
              const errorMessage = error.response?.data?.message || "Something went wrong. Please try again.";
 
-        toast.error(errorMessage);
       },
     }
   );
-
+// Function to run the mutation &  submit the Form
   const handleSubmit = (e) => {
     e.preventDefault();
     mutation.mutate();
