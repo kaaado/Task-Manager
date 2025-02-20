@@ -18,7 +18,7 @@ useEffect(()=>{
 		const res = await axios.get(`${BASEURL}/${GOOGLE_CALL_BACK}${location.search}`);
 		setLoading(false);
 		const token = res.data.access_token;
-        cookie.set('ecom', token);
+        cookie.set('task', token);
         nav('/tasks');
         
 		}catch(err){

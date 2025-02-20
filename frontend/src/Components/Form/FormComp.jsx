@@ -110,7 +110,7 @@ function FormComp(props) {
 
           <div className="or-divider text-center my-2 fw-bold">OR</div>
           <button className="btn mt-2 py-2 px-3 d-flex align-items-center justify-content-center shadow-sm border scale-hover fs-4 mx-auto">
-            <Link to={`http://127.0.0.1:8000/login-google`}>
+            <Link to={`${BASEURL}/login-google`}>
               <FcGoogle />
             </Link>
           </button>
