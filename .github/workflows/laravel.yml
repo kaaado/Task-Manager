@@ -48,9 +48,8 @@ jobs:
           echo "DB_DATABASE=task" >> .env
           echo "DB_USERNAME=root" >> .env
           echo "DB_PASSWORD=" >> .env
+          echo "QUEUE_CONNECTION=database" >> .env  # ✅ Added queue configuration
         working-directory: ./backend
-
-     
 
       - name: 🏁 Ensure MySQL is Ready
         run: |
@@ -71,3 +70,11 @@ jobs:
           DB_DATABASE: task
           DB_USERNAME: root
           DB_PASSWORD: ""
+
+      - name: 🔄 Restart Laravel Queue
+        run: php artisan queue:restart
+        working-directory: ./backend
+
+      - name: 📌 Start Laravel Queue Worker
+        run: nohup php artisan queue:work --tries=3 > storage/logs/queue.log 2>&1 &
+        working-directory: ./backend
