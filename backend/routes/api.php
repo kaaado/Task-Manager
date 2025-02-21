@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\socialAuthController;
 use App\Http\Controllers\UsersContoller;
+use App\Http\Controllers\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,19 @@ Route::middleware('auth:api')->group(function () {
     Route::controller(UsersContoller::class)->group(function () {
         Route::get('/user', 'authUser');
     });
+    // Tasks 
+    
+Route::controller(TaskContoller::class)->group(function () {
+        
+        Route::get('/tasks',  'index');
+Route::get('/tasks/{id}', 'show');
+Route::post('/task/add', 'store');
+Route::put('task/edit/{id}', 'update');
+Route::get('task/search/{query}', 'search');
+Route::delete('task/{id}', 'destroy');
+
+    });
+
 
     // Auth
     Route::get('/logout', [AuthController::class, 'logout']);
