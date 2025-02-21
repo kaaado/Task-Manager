@@ -4,25 +4,32 @@ import { Container, Navbar, Nav, Row, Col, Card, Button, Form, Modal, Dropdown }
 import { useEffect, useState } from "react";
 import Cookie from 'cookie-universal';
 import toast from 'react-hot-toast';
+import { SiGoogletasks } from "react-icons/si";
+import { FaUser } from "react-icons/fa";
+import { IoCloseSharp } from "react-icons/io5";
+import TaskContainer from './TaskContainer'
 
 function Tasks() {
-  const [showUpgrade, setShowUpgrade] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [user, setUser] = useState({ name: "", email: "" });
+
+  
+  //const [showPaymentModal, setShowPaymentModal] = useState(false);
+   const [showBanner, setShowBanner] =useState(true);
+  const [showUpgrade, setShowUpgrade]=useState(false);
+  const [user, setUser] = useState("");
 const cookie = Cookie();
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  
 
   const fetchUser = async () => {
     try {
       const response = await Axios.get(`/${USER}`);
-      setUser({ name: response.data.name, email: response.data.email });
+      setUser(response.data);
     } catch (err) {
       console.error("Failed to fetch user:", err);
     }
-  };
-
+  };  
+useEffect(() => {
+    fetchUser();
+  }, []);
   async function handleLogout() {
     try {
       await Axios.get(`/${LOGOUT}`);
@@ -35,25 +42,33 @@ const cookie = Cookie();
   }
 
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    const query = document.getElementById("searchInput").value;
-    try {
-      const response = await Axios.get(`/task/search/${query}`);
-      console.log("Search Results:", response.data);
-    } catch (err) {
-      console.error("Search failed:", err);
-    }
-  };
-
   return (
     <>
-      {/* Payment Banner */}
-      <div className="bg-warning text-center py-2">
-        <Button variant="dark" size="sm" onClick={() => setShowUpgrade(true)}>
-          Upgrade to Pro Plan
-        </Button>
-      </div>
+    {/* Payment Banner */}
+{showBanner && (
+  <div
+    className={`bg-warning text-lg-center py-2 text-md-center position-relative banner-transition d-none d-md-block`}
+  >
+    Get access to premium features by upgrading to the Pro Plan
+    <Button
+      className="ms-2 py-2 rounded-2 fw-bold"
+      size="sm"
+      variant="dark"
+      onClick={() => setShowUpgrade(true)}
+    >
+      Upgrade to Pro Plan
+    </Button>
+    <Button
+      className="position-absolute top-50 end-0 translate-middle-y me-3 p-0"
+      variant="link"
+      style={{ background: "transparent", border: "none", color: "black" }}
+      onClick={() => setShowBanner(false)}
+    >
+      <IoCloseSharp size={18} />
+    </Button>
+  </div>
+)}
+
       
       {/* Upgrade Modal */}
       <Modal show={showUpgrade} onHide={() => setShowUpgrade(false)} backdrop="static" keyboard={false}>
@@ -83,32 +98,34 @@ const cookie = Cookie();
         </Modal.Footer>
       </Modal>
       
-      {/* Navbar */}
-      <Navbar bg="primary" variant="dark">
+     {/* Navbar */}
+      <Navbar bg="light" variant="light" expand="lg" >
         <Container>
-          <Navbar.Brand href="#home">Task Manager</Navbar.Brand>
-          <Form className="d-flex mx-auto" onSubmit={handleSearch}>
-            <Form.Control
-              id="searchInput"
-              type="search"
-              placeholder="Search tasks..."
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-light" type="submit">Search</Button>
-          </Form>
+          <Navbar.Brand href="/" className="fw-bold"><SiGoogletasks className="me-2 fs-3 fw-normal text-primary" />Tasko</Navbar.Brand>
+ 
           
-          <Dropdown>
-            <Dropdown.Toggle variant="light" id="dropdown-basic">
-              👤
-            </Dropdown.Toggle>
-            <Dropdown.Menu align="end">
-              <Dropdown.ItemText>{user.name}</Dropdown.ItemText>
-              <Dropdown.ItemText>{user.email}</Dropdown.ItemText>
-              <Dropdown.Divider />
-              <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+              
+             {/* User Info & Dropdown */}
+<div className="d-flex align-items-center">
+  <div className="text-lg-start me-2 d-none d-md-block">
+    <strong className="fs-6 text-primary">{user.name || "User"}</strong>
+    <br />
+    <small className="text-secondary text-md-truncate" style={{ fontSize: '13px', maxWidth: '160px', display: 'block' }}>
+      {user.email || "Email"}
+    </small>
+  </div>
+  <Dropdown align="end">
+    <Dropdown.Toggle variant="light">
+      <FaUser className="rounded-circle" size={24} />
+    </Dropdown.Toggle>
+    <Dropdown.Menu>
+      <Dropdown.Item onClick={() => setShowUpgrade(true)}>Upgrade to Pro Plan</Dropdown.Item>
+      <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+    </Dropdown.Menu>
+  </Dropdown>
+</div>
+
+           
         </Container>
       </Navbar>
       
@@ -117,14 +134,9 @@ const cookie = Cookie();
         <Row>
           {/* Left Panel */}
           <Col md={8}>
-            <Card>
-              <Card.Body>
-                <h5>Task List</h5>
-                <Button variant="primary" className="mb-3">Add Task</Button>
-                {/* TaskContainer Component  */}
-              </Card.Body>
-            </Card>
+          	<TaskContainer />
           </Col>
+
           
           {/* Right Panel */}
           <Col md={4}>

@@ -8,6 +8,7 @@ import Cookie from "cookie-universal";
 import Spinner from "react-bootstrap/Spinner";
 import { useMutation } from "react-query";
 import useForm from "../../Hooks/useForm"; 
+import { SiGoogletasks } from "react-icons/si";
 
 function FormComp(props) {
   // Set up Coockie for storing the token 
@@ -34,7 +35,7 @@ function FormComp(props) {
         const token = data.token;
         cookie.set("task", token);
         toast.success(`Welcome ${data.user.name.slice(0, 15)}`);
-        nav('/tasks')
+        window.location.pathname = "/tasks"; 
         resetForm();
       },
       onError: (error) => {
@@ -61,8 +62,14 @@ function FormComp(props) {
           />
         </div>
 
-        <div className="px-5 right-side col-lg-4 col-md-8 col-sm-10 mx-auto d-flex flex-column align-items-start justify-content-center p-4 shadow-sm rounded bg-white form-container vh-100">
-          <h3 className="mt-4 text-start mb-1 text-capitalize text-truncate">
+        <div className="px-5 right-side col-lg-4 col-md-8 col-sm-10 mx-auto d-flex flex-column align-items-start justify-content-center py-4 shadow-sm rounded bg-white form-container vh-100">
+       <h2 className="mt-4 fw-bold text-start text-sm-center">
+  <SiGoogletasks className=" me-2 fs-3 text-primary" />
+  Tasko
+</h2>
+
+
+          <h3 className="mt-2  fs-4 text-start mb-1 text-capitalize text-truncate">
             Welcome to Tasko! 👋
           </h3>
           <h4 className="text-secondary mb-4 fs-6 w-100">

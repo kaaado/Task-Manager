@@ -19,7 +19,7 @@ useEffect(()=>{
 		setLoading(false);
 		const token = res.data.access_token;
         cookie.set('task', token);
-        nav('/tasks');
+        window.location.pathname = "/tasks";
         
 		}catch(err){
 		setLoading(false);

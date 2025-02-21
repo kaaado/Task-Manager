@@ -24,6 +24,18 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
+.banner-transition {
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+  opacity: 1;
+  max-height: 100px; 
+  overflow: hidden;
+}
+
+.banner-transition.hide {
+  opacity: 0;
+  max-height: 0;
+}
+
 
 @keyframes fadeIn {
   from {
