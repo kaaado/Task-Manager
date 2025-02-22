@@ -67,3 +67,11 @@ body {
     opacity: 0;
   }
 }
+
+.transition-transform {
+  transition: transform 0.2s ease-in-out;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}

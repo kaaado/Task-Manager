@@ -17,16 +17,16 @@ protected $model = \App\Models\User::class;
      *
      * @return array<string, mixed>
      */
- public function definition(): array
-    {
-        return [
-            'name' => 'user',  
-            'email' => 'user@user.com',  
-            'password' => Hash::make('123456789'), 
-            'remember_token' => Str::random(10),
-            'email_verified_at' => now(),
-        ];
-    }
+public function definition(): array
+{
+    return [
+        'name' => $this->faker->name(),  
+        'email' => $this->faker->unique()->safeEmail(),  
+        'password' => Hash::make('123456789'), 
+        'remember_token' => Str::random(10),
+        'email_verified_at' => now(),
+    ];
+}
 
     /**
      * Indicate that the model's email address should be unverified.

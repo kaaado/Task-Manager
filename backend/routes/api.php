@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\socialAuthController;
 use App\Http\Controllers\UsersContoller;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\SubtaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,16 +40,23 @@ Route::middleware('auth:api')->group(function () {
     });
     // Tasks 
     
-Route::controller(TaskContoller::class)->group(function () {
+Route::controller(TaskController::class)->group(function () {
         
-        Route::get('/tasks',  'index');
+Route::get('/tasks',  'index');
 Route::get('/tasks/{id}', 'show');
 Route::post('/task/add', 'store');
-Route::put('task/edit/{id}', 'update');
-Route::get('task/search/{query}', 'search');
-Route::delete('task/{id}', 'destroy');
-
+Route::put('/task/edit/{id}', 'update');
+Route::delete('/task/{id}', 'destroy');
+Route::get('/tasks/statistics', 'statistics');
     });
+
+Route::controller(SubtaskController::class)->group(function () {
+    Route::get('/tasks/{task}/subtasks', 'index');        
+    Route::get('/tasks/{task}/subtasks/{id}', 'show');    
+    Route::post('/tasks/{task}/subtasks', 'store');       
+    Route::put('/tasks/{task}/subtasks/{id}', 'update'); 
+    Route::delete('/tasks/{task}/subtasks/{id}', 'destroy'); 
+});
 
 
     // Auth

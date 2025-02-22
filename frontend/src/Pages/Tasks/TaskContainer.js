@@ -1,40 +1,87 @@
+import { useState, useEffect } from 'react';
+import { Card, Button, Spinner } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
-import { Card,Button } from 'react-bootstrap';
+import { format } from 'date-fns';
+import Axios from "../../Api/axios";
+import { TASKS, TASK } from "../../Api/Api";
+import toast from 'react-hot-toast';
+import Task from '../../Components/Task/Task';
+import TaskModal from '../../Components/Modal/TaskModal'; 
 
-export default function TaskContainer(){
-// Function to format the date 
-const getFormattedDate = () => {
-  const date = new Date(); 
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+const TaskContainer = ({ user_id }) => {
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  
-  const day = date.getDate();
-  const suffix = (day % 10 === 1 && day !== 11) ? "st" :
-                 (day % 10 === 2 && day !== 12) ? "nd" :
-                 (day % 10 === 3 && day !== 13) ? "rd" : "th";
+  const priorityOrder = { urgent: 0, high: 1, normal: 2, low: 3 };
 
-  return formattedDate.replace(/\d+/, `${day}${suffix}`);
+  const fetchTasks = async () => {
+    try {
+      setLoading(true);
+      const response = await Axios.get(`/${TASKS}`);
+      setTasks(response.data.sort((a, b) => 
+        priorityOrder[a.priority] - priorityOrder[b.priority]
+      ));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
+
+  const handleTaskCreated = () => {
+    fetchTasks();
+    handleClose(); 
+  };
+
+  async function handleDelete(id) {
+    try {
+      await Axios.delete(`${TASK}/${id}`);
+      setTasks(prev => prev.filter(item => item.id !== id));
+      toast.success("Task Deleted Successfully");
+    } catch (err) {
+      toast.error(err);
+    }
+  }
+
+  return (
+    <Card className="rounded-5 p-4 border-white h-100" style={{ backgroundColor: "#f6f5fa", height: 'calc(100vh - 100px)' }}>
+      <Card.Body className="d-flex flex-column">
+        <div className="d-flex align-items-center fw-bold mb-4">  
+          <div className="flex-grow-1">  
+            <h2 className="mb-1 fw-bold">Task List</h2>  
+            <h6 className="text-primary fw-bold">{format(new Date(), 'MMMM do, yyyy')}</h6>  
+          </div>  
+          <Button variant="primary" onClick={handleShow} className="p-2 rounded">  
+            <FaPlus />  
+          </Button>  
+        </div>
+
+        
+        <TaskModal
+          show={showModal}
+          onHide={handleClose}
+          user_id={user_id}
+          onTaskCreated={handleTaskCreated}
+        />
+
+        <div style={{ overflowY: 'auto', flex: 1 }}>
+          {loading ?  
+            <p className="text-center text-muted"><Spinner className="me-2" variant="info" animation="border" size="sm" /> Loading...</p> 
+            : tasks.map(task => (
+              <Task key={task.id} task={task} onDelete={handleDelete} />
+          ))}
+        </div>
+      </Card.Body>
+    </Card>
+  );
 };
 
-const FullDate = getFormattedDate();
-
-return(
-	<Card className="rounded-5 p-4 border-white" style={{ backgroundColor: "#f6f5fa" }}>
-    <Card.Body>
-      {/* Flex container for Title + Date + Button */}
-      <div className="d-flex align-items-center fw-bold">
-        <div className="flex-grow-1">
-          <h2 className="mb-1 fw-bold">Task List</h2>
-          <h6 className="text-primary fw-bold">{FullDate}</h6>
-        </div>
-        <Button variant="primary" className="p-2 mx-auto">
-          <FaPlus />
-        </Button>
-      </div>
-      {/* Task Component */}
-      
-    </Card.Body>
-  </Card>
-)
-}
+export default TaskContainer;

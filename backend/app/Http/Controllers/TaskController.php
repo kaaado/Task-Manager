@@ -14,10 +14,14 @@ use Carbon\Carbon;
 class TaskController extends Controller
 {
     // Get all tasks
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::with('subtasks')->get();
-        return response()->json($tasks);
+        $allTasks = Task::with('subtasks')->get(); 
+        
+        $tasks = Task::with('subtasks')->paginate($request->input('limit', 10));
+        
+         $finalResult = $request->input('limit') ?  $tasks : $allTasks ;
+        return response()->json($finalResult);
     }
 
     // Get a specific task by ID
@@ -42,12 +46,11 @@ class TaskController extends Controller
             'priority' => 'required|in:urgent,high,normal,low',
             'locked' => 'nullable|boolean',
         ]);
+        
+      $task = Task::create($validated);
 
-        $task = Task::create($validated);
-
-        // Send email notification 
-        Mail::to($task->user->email)->queue(new TaskCreated($task->load('user')));
-
+ // Send email notification 
+       Mail::to($task->user->email)->queue(new TaskCreated($task->load('user')));
 
         return response()->json($task, 200);
     }
@@ -68,23 +71,17 @@ class TaskController extends Controller
         'priority' => 'sometimes|in:urgent,high,normal,low',
         'locked' => 'nullable|boolean',
     ]);
+    
+    if (!empty($validated['start_date']) && !empty($validated['due_date']) && $validated['due_date'] < $validated['start_date']) {
+    return back()->withErrors(['due_date' => 'The due date cannot be earlier than the start date.']);
+}
+
 
     $task->update($validated);
     return response()->json($task);
 }
 
 
-
-    // Search for tasks by query
-  public function search($query)
-{
-    $tasks = Task::where('title', 'like', "%{$query}%")
-        ->orWhere('description', 'like', "%{$query}%")
-        ->orWhere('tags', 'like', "%{$query}%")
-        ->get();
-
-    return response()->json($tasks);
-}
 
 
     // Send email notification when due date is less than 24 hours away
@@ -103,6 +100,29 @@ class TaskController extends Controller
         return response()->json(['message' => 'Due date reminders sent successfully']);
     }
     
+    // Calculate percentages
+    public function statistics()
+{
+    $totalTasks = Task::count();
+    $completedTasks = Task::where('status', 'complete')->count();
+    $inProgressTasks = Task::where('status', 'inprogress')->count();
+    $todoTasks = Task::where('status', 'todo')->count();
+
+    
+    $completedPercentage = $totalTasks > 0 ? round(($completedTasks / $totalTasks) * 100, 2) : 0;
+    $inProgressPercentage = $totalTasks > 0 ? round(($inProgressTasks / $totalTasks) * 100, 2) : 0;
+    $todoPercentage = $totalTasks > 0 ? round(($todoTasks / $totalTasks) * 100, 2) : 0;
+
+    return response()->json([
+        'total_tasks' => $totalTasks,
+        'completed_tasks' => $completedTasks,
+        'completed_percentage' => $completedPercentage,
+        'inprogress_tasks' => $inProgressTasks,
+        'inprogress_percentage' => $inProgressPercentage,
+        'todo_tasks' => $todoTasks,
+        'todo_percentage' => $todoPercentage,
+    ]);
+}
     
     // Delete a task by ID
     public function destroy($id)
