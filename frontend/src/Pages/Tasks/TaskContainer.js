@@ -6,7 +6,7 @@ import Axios from "../../Api/axios";
 import { TASKS, TASK } from "../../Api/Api";
 import toast from 'react-hot-toast';
 import Task from '../../Components/Task/Task';
-import TaskModal from '../../Components/Modal/TaskModal'; 
+import TaskModal from '../../Components/Modal/TaskModal';
 
 const TaskContainer = ({ user_id }) => {
   const [tasks, setTasks] = useState([]);
@@ -64,7 +64,7 @@ const TaskContainer = ({ user_id }) => {
           </Button>  
         </div>
 
-        
+        {/* Task Modal */}
         <TaskModal
           show={showModal}
           onHide={handleClose}
@@ -72,12 +72,20 @@ const TaskContainer = ({ user_id }) => {
           onTaskCreated={handleTaskCreated}
         />
 
+        {/* Task List */}
         <div style={{ overflowY: 'auto', flex: 1 }}>
-          {loading ?  
-            <p className="text-center text-muted"><Spinner className="me-2" variant="info" animation="border" size="sm" /> Loading...</p> 
-            : tasks.map(task => (
+          {loading ? (  
+            <p className="text-center text-muted">
+              <Spinner className="me-2" variant="info" animation="border" size="sm" /> 
+              Loading...
+            </p>
+          ) : tasks.length === 0 ? (
+            <p className="text-center text-muted">No Tasks Yet</p>
+          ) : (
+            tasks.map(task => (
               <Task key={task.id} task={task} onDelete={handleDelete} />
-          ))}
+            ))
+          )}
         </div>
       </Card.Body>
     </Card>
