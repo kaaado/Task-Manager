@@ -1,4 +1,4 @@
-export const BASEURL=`https://task-manager-production-3313.up.railway.app`;
+export const BASEURL=`https://task-manager-production-3313.up.railway.app/api`;
 
 export const LOGIN=`login`;
 export const REGISTER=`register`;
