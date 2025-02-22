@@ -9,14 +9,14 @@ A powerful **Task Manager Application** built with **React** (frontend) and **La
    - Create, Read, Update, and Delete (CRUD) tasks.
    - Each task can have **subtasks** (nested tasks).
    - Task status tracking: `todo`, `inprogress`, `complete`.
-   - Progress percentage for each task (based on subtask completion).
+   - Progress percentage for each task (based on task completion).
 
 2. **User Authentication**:
    - Secure user registration, login, and logout.
    - Role-based access control (Free vs. Pro users).
 
 3. **Pro Plan Features**:
-   - **Free Plan**: Basic task management (limited to 10 tasks).
+   - **Free Plan**: Basic task management.
    - **Pro Plan**: Unlocks advanced features:
      - Unlimited tasks.
      - Calendar view for task scheduling.
@@ -24,7 +24,7 @@ A powerful **Task Manager Application** built with **React** (frontend) and **La
      - Recive Emails.
 
 4. **Task Tracking**:
-   - Visual progress bar for each task (based on subtask completion).
+   - Visual progress bar for each task (based on task completion).
    - Percentage of completion displayed for each task.
 
 5. **Calendar View**:
@@ -55,7 +55,7 @@ A powerful **Task Manager Application** built with **React** (frontend) and **La
 1. Clone the repository:
    ```bash
    git clone https://github.com/kaaado/Task-Manager
-   cd task-manager
+   cd Task-Manager
    ```
 2. Install dependencies:
    ```bash
@@ -86,7 +86,7 @@ A powerful **Task Manager Application** built with **React** (frontend) and **La
 1. Clone the repository:
    ```bash
    git clone https://github.com/kaaado/Task-Manager
-   cd task-manager
+   cd Task-Manager
    ```
 2. Install dependencies:
    ```bash
@@ -96,7 +96,7 @@ A powerful **Task Manager Application** built with **React** (frontend) and **La
    ```bash
    npm start
    ```
-```
+
 
 ## 🧪 Testing
 
