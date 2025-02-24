@@ -43,12 +43,12 @@ const Task = ({ task, onDelete }) => {
       <UpgradeModal showUpgrade={showUpgrade} handleClose={handleClose} />
       <Card className="mb-3 border-0 rounded-5 p-1" style={{ backgroundColor: priorityColors[task.priority] + '15' }}>
         <Card.Body>
-          <Row className={`${isOpen ? 'align-items-start' : 'align-items-center' } me-1`}>
-            <Col xs={1} lg={2} md={1} sm={1}>
-              <FaCircle size="1.3em" color={statusColor[task.status]} className="mb-2" />
+          <Row className={`${isOpen ? 'align-items-start' : 'align-items-center' } `}>
+            <Col  lg={1} md={1} sm={1} xs={1}>
+              <FaCircle size="1.3em" color={statusColor[task.status]} className="mb-2 me-1" />
             </Col>
 
-            <Col lg={8} md={10} sm={9} xs={9}>
+            <Col lg={10} md={10} sm={9} xs={9}>
               <details open={isOpen} onToggle={(e) => setIsOpen(e.target.open)} style={{ width: '100%' }}>
                 <summary style={{ cursor: 'pointer', listStyle: 'none' }}>
                   <div className="d-flex align-items-center justify-content-between">
@@ -95,14 +95,14 @@ const Task = ({ task, onDelete }) => {
                   ) : (
                     <div className="mt-3">
                       <h6 className="small fw-bold">Subtasks:</h6> 
-                      <p className="text-center text-muted">No Subtasks yet</p> 
+                      <p className=" small text-center text-muted">No Subtasks yet</p> 
                     </div>
                   )}
                 </div>
               </details>
             </Col>
 
-            <Col xs={1} lg={2} md={1} sm={1} className="d-flex flex-sm-row text-end mx-1">
+            <Col lg={1} md={1} sm={1} xs={1} className=" text-end ">
               <Stack gap={1}>
                 <Button variant="link" size="md" onClick={() => setShowUpgrade(true)}>
                   <MdModeEdit />

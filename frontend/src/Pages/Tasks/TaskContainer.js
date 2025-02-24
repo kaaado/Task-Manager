@@ -52,7 +52,7 @@ const TaskContainer = ({ user_id }) => {
   }
 
   return (
-    <Card className="rounded-5 py-4 px-3 border-white h-100" style={{ backgroundColor: "#f6f5fa", height: 'calc(100vh - 100px)' }}>
+    <Card className="rounded-5 py-4   border-white h-100 w-100" style={{ backgroundColor: "#f6f5fa", height: 'calc(100vh - 100px)' }}>
       <Card.Body className="d-flex flex-column">
         <div className="d-flex align-items-center fw-bold mb-4">  
           <div className="flex-grow-1">  
