@@ -54,7 +54,7 @@ const Task = ({ task, onDelete }) => {
                   <div className="d-flex align-items-center justify-content-between">
                     <div>
                       <h5 className="fw-bold mb-1">{task.title}</h5>
-                      <p className="text-muted small mb-2">{isOpen ? task.description?  task.description : '' :task.description.slice(0, 80)+'...'}</p>
+                      <p className="text-muted small mb-2">{isOpen ? task.description : task.description.slice(0, 80)+'...'}</p>
                     </div>
                     <FaChevronDown className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                   </div>
