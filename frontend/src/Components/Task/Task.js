@@ -1,4 +1,4 @@
-upimport { FaTrash, FaPlus, FaTag, FaCircle, FaChevronDown } from "react-icons/fa";
+import { FaTrash, FaPlus, FaTag, FaCircle, FaChevronDown } from "react-icons/fa";
 import { MdModeEdit } from "react-icons/md";
 import { Card, Button, Row, Col, Badge, Stack } from 'react-bootstrap';
 import { format, parseISO, isPast } from 'date-fns';
@@ -54,7 +54,7 @@ const Task = ({ task, onDelete }) => {
                   <div className="d-flex align-items-center justify-content-between">
                     <div>
                       <h5 className="fw-bold mb-1">{task.title}</h5>
-                      <p className="text-muted small mb-2">{isOpen ? task.description : task.description.slice(0, 80)+'...'}</p>
+                      <p className="text-muted small mb-2">{isOpen ? task.description?  task.description : '' :task.description.slice(0, 80)+'...'}</p>
                     </div>
                     <FaChevronDown className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                   </div>
@@ -102,7 +102,7 @@ const Task = ({ task, onDelete }) => {
               </details>
             </Col>
 
-            <Col xs={1} lg={2} md={2} sm={1} className="d-flex flex-sm-row text-end">
+            <Col xs={1} lg={2} md={2} sm={2} className="d-flex flex-sm-row text-end">
               <Stack gap={1}>
                 <Button variant="link" size="md" onClick={() => setShowUpgrade(true)}>
                   <MdModeEdit />
