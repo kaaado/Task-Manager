@@ -92,6 +92,7 @@ required
               <FloatingLabel controlId="tags" label="Tag ">
                 <Form.Control
                   name="tags"
+required 
                   value={formData.tags}
                   onChange={handleChange}
                 />
