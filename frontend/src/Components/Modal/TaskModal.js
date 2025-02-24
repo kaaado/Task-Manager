@@ -153,6 +153,7 @@ required
                 name="start_date"
                 value={formData.start_date}
                 onChange={handleChange}
+ required 
               />
             </div>
             <div className="col-md-6">
