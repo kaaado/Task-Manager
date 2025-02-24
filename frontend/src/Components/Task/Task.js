@@ -102,7 +102,7 @@ const Task = ({ task, onDelete }) => {
               </details>
             </Col>
 
-            <Col xs={2} lg={2} md={2} sm={2} className="d-flex flex-sm-row text-end">
+            <Col xs={1} lg={2} md={2} sm={1} className="d-flex flex-sm-row text-end mx-1">
               <Stack gap={1}>
                 <Button variant="link" size="md" onClick={() => setShowUpgrade(true)}>
                   <MdModeEdit />
