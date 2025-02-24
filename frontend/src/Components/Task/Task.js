@@ -43,7 +43,7 @@ const Task = ({ task, onDelete }) => {
       <UpgradeModal showUpgrade={showUpgrade} handleClose={handleClose} />
       <Card className="mb-3 border-0 rounded-5 p-1" style={{ backgroundColor: priorityColors[task.priority] + '15' }}>
         <Card.Body>
-          <Row className={`${isOpen ? 'align-items-start' : 'align-items-center' } ms-1`}>
+          <Row className={`${isOpen ? 'align-items-start' : 'align-items-center' } me-1`}>
             <Col xs={1} lg={2} md={1} sm={1}>
               <FaCircle size="1.3em" color={statusColor[task.status]} className="mb-2" />
             </Col>
@@ -102,7 +102,7 @@ const Task = ({ task, onDelete }) => {
               </details>
             </Col>
 
-            <Col xs={1} lg={2} md={2} sm={2} className="d-flex flex-sm-row text-end">
+            <Col xs={2} lg={2} md={2} sm={2} className="d-flex flex-sm-row text-end">
               <Stack gap={1}>
                 <Button variant="link" size="md" onClick={() => setShowUpgrade(true)}>
                   <MdModeEdit />
