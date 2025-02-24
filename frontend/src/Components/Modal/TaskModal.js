@@ -83,6 +83,7 @@ const TaskModal = ({ show, onHide, user_id, onTaskCreated }) => {
               value={formData.description}
               onChange={handleChange}
               style={{ height: '100px' }}
+required
             />
           </FloatingLabel>
 
@@ -103,6 +104,7 @@ const TaskModal = ({ show, onHide, user_id, onTaskCreated }) => {
                   name="type"
                   value={formData.type}
                   onChange={handleChange}
+
                 >
                   {['task', 'milestone', 'form_response', 'bug', 'project'].map(option => (
                     <option key={option} value={option}>{option}</option>
