@@ -14,16 +14,18 @@ use Carbon\Carbon;
 class TaskController extends Controller
 {
     // Get all tasks
-    public function index(Request $request)
-    {
-        $allTasks = Task::with('subtasks')->get(); 
-        
-        $tasks = Task::with('subtasks')->paginate($request->input('limit', 10));
-        
-         $finalResult = $request->input('limit') ?  $tasks : $allTasks ;
-        return response()->json($finalResult);
-    }
+public function index(Request $request)
+{
+    $userId = auth()->id();
 
+    $allTasks = Task::with('subtasks')->where('user_id', $userId)->get();
+
+    $tasks = Task::with('subtasks')->where('user_id', $userId)->paginate($request->input('limit', 10));
+
+    $finalResult = $request->input('limit') ? $tasks : $allTasks;
+    
+    return response()->json($finalResult);
+}
     // Get a specific task by ID
     public function show($id)
     {
