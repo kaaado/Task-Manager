@@ -1,4 +1,4 @@
-import { FaTrash, FaPlus, FaTag, FaCircle, FaChevronDown } from "react-icons/fa";
+upimport { FaTrash, FaPlus, FaTag, FaCircle, FaChevronDown } from "react-icons/fa";
 import { MdModeEdit } from "react-icons/md";
 import { Card, Button, Row, Col, Badge, Stack } from 'react-bootstrap';
 import { format, parseISO, isPast } from 'date-fns';
@@ -43,9 +43,9 @@ const Task = ({ task, onDelete }) => {
       <UpgradeModal showUpgrade={showUpgrade} handleClose={handleClose} />
       <Card className="mb-3 border-0 rounded-5 p-1" style={{ backgroundColor: priorityColors[task.priority] + '15' }}>
         <Card.Body>
-          <Row className={`${isOpen ? 'align-items-start' : 'align-items-center' }`}>
+          <Row className={`${isOpen ? 'align-items-start' : 'align-items-center' } ms-1`}>
             <Col xs={1} lg={2} md={1} sm={1}>
-              <FaCircle size="1.5em" color={statusColor[task.status]} className="mb-2" />
+              <FaCircle size="1.3em" color={statusColor[task.status]} className="mb-2" />
             </Col>
 
             <Col lg={8} md={9} sm={9} xs={9}>
