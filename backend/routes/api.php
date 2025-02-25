@@ -51,11 +51,11 @@ Route::get('/tasks/statistics', 'statistics');
     });
 
 Route::controller(SubtaskController::class)->group(function () {
-    Route::get('/tasks/{task}/subtasks', 'index');        
-    Route::get('/tasks/{task}/subtasks/{id}', 'show');    
-    Route::post('/tasks/{task}/subtasks', 'store');       
-    Route::put('/tasks/{task}/subtasks/{id}', 'update'); 
-    Route::delete('/tasks/{task}/subtasks/{id}', 'destroy'); 
+    Route::get('/subtasks', 'index');        
+    Route::get('/subtasks/{id}', 'show');    
+    Route::post('/subtasks/add', 'store');       
+    Route::put('/subtasks/edit/{id}', 'update'); 
+    Route::delete('/subtasks/{id}', 'destroy'); 
 });
 
 

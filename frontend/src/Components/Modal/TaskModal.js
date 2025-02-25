@@ -3,6 +3,9 @@ import { Modal, Form, FloatingLabel, Button,Spinner } from 'react-bootstrap';
 import Axios from "../../Api/axios";
 import toast from 'react-hot-toast';
 
+// Free plan limit
+const TASK_LIMIT = 10; 
+
 const TaskModal = ({ show, onHide, user_id, onTaskCreated }) => {
   const [formData, setFormData] = useState({
     user_id: user_id || '',
@@ -16,6 +19,9 @@ const TaskModal = ({ show, onHide, user_id, onTaskCreated }) => {
     priority: 'normal'
   });
   const [isLoading ,setIsLoading]=useState(false)
+  const [taskCount, setTaskCount] = useState(0);
+  const [disable, setDisable] = useState(false); 
+
   
   useEffect(() => {
     setFormData(prev => ({
@@ -34,23 +40,26 @@ const TaskModal = ({ show, onHide, user_id, onTaskCreated }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (taskCount >= TASK_LIMIT) {
+      toast.error("You have reached the free-tier task limit. Upgrade your account.");
+      setDisable(true)
+      return;
+    }
     setIsLoading(true)
     try {
 
       await Axios.post('/task/add', formData);
       toast.success('Task created successfully!');
-      onTaskCreated(); 
-      setFormData({
-    user_id: user_id || '',
-    title: '',
-    description: '',
-    tags: '',
-    type: 'task',
-    status: 'todo',
-    start_date: '',
-    due_date: '',
-    priority: 'normal'
-  })
+      onTaskCreated();
+      setTaskCount(prev => prev + 1); 
+      setFormData(prev => ({
+        ...prev,
+        title: '',
+        description: '',
+        tags: '',
+        start_date: '',
+        due_date: ''
+      }));
     } catch (err) {
     setIsLoading(false)
       toast.error('Failed to create task');
@@ -171,7 +180,7 @@ required
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={onHide}>Cancel</Button>
-          <Button variant="primary" type="submit">{isLoading ? <Spinner animation="border" size="sm" /> : "Create Task"} </Button>
+          <Button variant="primary" type="submit" disabled={disable}>{isLoading ? <Spinner animation="border" size="sm" /> : "Create Task"} </Button>
         </Modal.Footer>
       </Form>
     </Modal>
