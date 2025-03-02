@@ -19,17 +19,14 @@ A powerful **Task Manager Application** built with **React** (frontend) and **La
    - **Free Plan**: Basic task management.
    - **Pro Plan**: Unlocks advanced features:
      - Unlimited tasks.
-     - Calendar view for task scheduling.
      - Subtask functionality.
      - Recive Emails.
 
 4. **Task Tracking**:
-   - Visual progress bar for each task (based on task completion).
-   - Percentage of completion displayed for each task.
+   - Percentage of completion displayed for each status of tasks.
 
 5. **Calendar View**:
    - Monthly calendar to view tasks and due dates.
-   - Drag-and-drop functionality to reschedule tasks.
 
 6. **Payment Integration**:
    - Simulated payment gateway to upgrade to the Pro plan.
@@ -96,21 +93,6 @@ A powerful **Task Manager Application** built with **React** (frontend) and **La
    ```bash
    npm start
    ```
-
-
-## 🧪 Testing
-
-### Backend Tests
-Run the following command to execute backend tests:
-```bash
-php artisan test
-```
-
-### Frontend Tests
-Run the following command to execute frontend tests:
-```bash
-npm test
-```
 
 
 ## 📜 License
